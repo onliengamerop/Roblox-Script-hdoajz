@@ -1,0 +1,45 @@
+local kavoUi = loadstring(game:HttpGet("https://pastebin.com/raw/vff1bQ9F"))()
+local window = kavoUi.CreateLib("Spin A Wheel For Robux |Made By Chaptigamerfan99|", "BloodTheme")
+
+-- Creating the AutoFarm tab and section
+local Tab1 = window:NewTab("Spin AutoFarm")
+local Tab1Section = Tab1:NewSection("Spin AutoFarm OP😱")
+
+-- Adding the teleport functionality to the AutoFarm tab
+Tab1Section:NewButton("👉Autofarm Tp👈", "Autofarm Tp", function()
+    spawn(function()
+        while wait() do
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(
+                -8.3984642, 
+                7.01802397, 
+                403.743103, 
+                0.690802217, 
+                3.94829343e-08, 
+                0.723043799, 
+                -4.09805523e-08, 
+                1, 
+                -1.54533897e-08, 
+                -0.723043799, 
+                -1.89554967e-08, 
+                0.690802217
+            )
+            wait(0.5)
+        end
+    end)
+end)
+
+-- Creating the Spin tab and section
+local Tab2 = window:NewTab("Auto Instant Spin😱")
+local Tab2Section = Tab2:NewSection("Spin Actions")
+
+Tab2Section:NewButton("Start Spin", "Automatically Spin", function()
+    spawn(function()
+        while true do
+            local args = {
+                [1] = "spin"
+            }
+            game:GetService("ReplicatedStorage").Events.Spin:FireServer(unpack(args))
+            wait()
+        end
+    end)
+end)
