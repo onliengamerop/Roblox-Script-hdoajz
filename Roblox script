@@ -8,22 +8,9 @@ local Tab1Section = Tab1:NewSection("Spin AutoFarm OP😱")
 -- Adding the teleport functionality to the AutoFarm tab
 Tab1Section:NewButton("👉Autofarm Tp👈", "Autofarm Tp", function()
     spawn(function()
-        while wait() do
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(
-                -8.3984642, 
-                7.01802397, 
-                403.743103, 
-                0.690802217, 
-                3.94829343e-08, 
-                0.723043799, 
-                -4.09805523e-08, 
-                1, 
-                -1.54533897e-08, 
-                -0.723043799, 
-                -1.89554967e-08, 
-                0.690802217
-            )
-            wait(0.5)
+        while true do
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-17.6446705, 7.01802397, 408.413544, -0.994668305, 0, 0.103126742, 0, 1.00000012, 0, -0.103126742, 0, -0.994668305)
+            wait(3)
         end
     end)
 end)
@@ -41,5 +28,17 @@ Tab2Section:NewButton("Start Spin", "Automatically Spin", function()
             game:GetService("ReplicatedStorage").Events.Spin:FireServer(unpack(args))
             wait()
         end
+    end)
+end)
+
+-- Adding Anti-AFK functionality
+Tab2Section:NewButton("Activate Anti-AFK", "Prevents being kicked for inactivity", function()
+    spawn(function()
+        local vu = game:GetService("VirtualUser")
+        game:GetService("Players").LocalPlayer.Idled:connect(function()
+            vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+            wait(1)
+            vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+        end)
     end)
 end)
