@@ -1,18 +1,45 @@
 local kavoUi = loadstring(game:HttpGet("https://pastebin.com/raw/vff1bQ9F"))()
-local window = kavoUi.CreateLib("Spin A Wheel For Robux |Made By Chaptigamerfan99|", "BloodTheme")
+local window = kavoUi.CreateLib("Spin A Wheel For Robux V2 |Made By Chaptigamerfan99|", "Midnight")
 
 -- Creating the AutoFarm tab and section
 local Tab1 = window:NewTab("Spin AutoFarm")
 local Tab1Section = Tab1:NewSection("Spin AutoFarm OP😱")
 
--- Adding the teleport functionality to the AutoFarm tab
-Tab1Section:NewButton("👉Autofarm Tp👈", "Autofarm Tp", function()
-    spawn(function()
-        while true do
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-17.6446705, 7.01802397, 408.413544, -0.994668305, 0, 0.103126742, 0, 1.00000012, 0, -0.103126742, 0, -0.994668305)
-            wait(3)
-        end
-    end)
+local autoFarmRunning = false
+
+Tab1Section:NewToggle("Toggle Autofarm Tp", "Autofarm Tp", function(state)
+    autoFarmRunning = state
+    if autoFarmRunning then
+        spawn(function()
+            while autoFarmRunning do
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-17.6446705, 7.01802397, 408.413544, -0.994668305, 0, 0.103126742, 0, 1.00000012, 0, -0.103126742, 0, -0.994668305)
+                wait(3)
+            end
+        end)
+        print("Autofarm Tp On")
+    else
+        print("Autofarm Tp Off")
+    end
+end)
+
+local killEventLoopRunning = false
+
+Tab1Section:NewToggle("Toggle Kill Event Loop", "Toggle Automatic Kill Event", function(state)
+    killEventLoopRunning = state
+    if killEventLoopRunning then
+        spawn(function()
+            while killEventLoopRunning do
+                local args = {
+                    [1] = 1770897534
+                }
+                game:GetService("ReplicatedStorage").Events.KillEvent:FireServer(unpack(args))
+                wait()
+            end
+        end)
+        print("Kill Event Loop On")
+    else
+        print("Kill Event Loop Off")
+    end
 end)
 
 -- Creating the Spin tab and section
@@ -20,33 +47,22 @@ local Tab2 = window:NewTab("Auto Instant Spin😱")
 local Tab2Section = Tab2:NewSection("Spin Actions")
 
 local spinLoopRunning = false
-local spinLoop
 
-local function startSpinLoop()
-    spinLoopRunning = true
-    spinLoop = spawn(function()
-        while spinLoopRunning do
-            local args = {
-                [1] = "spin"
-            }
-            game:GetService("ReplicatedStorage").Events.Spin:FireServer(unpack(args))
-            wait()
-        end
-    end)
-end
-
-local function stopSpinLoop()
-    spinLoopRunning = false
-    if spinLoop then
-        spinLoop:Destroy()
-    end
-end
-
-Tab2Section:NewButton("Toggle Spin Loop", "Toggle Automatic Spinning", function()
-    if not spinLoopRunning then
-        startSpinLoop()
+Tab2Section:NewToggle("Toggle Spin Loop", "Toggle Automatic Spinning", function(state)
+    spinLoopRunning = state
+    if spinLoopRunning then
+        spawn(function()
+            while spinLoopRunning do
+                local args = {
+                    [1] = "spin"
+                }
+                game:GetService("ReplicatedStorage").Events.Spin:FireServer(unpack(args))
+                wait()
+            end
+        end)
+        print("Spin Loop On")
     else
-        stopSpinLoop()
+        print("Spin Loop Off")
     end
 end)
 
@@ -67,32 +83,21 @@ local Tab3 = window:NewTab("Free Spin😱")
 local Tab3Section = Tab3:NewSection("Free Spin Actions")
 
 local freeSpinLoopRunning = false
-local freeSpinLoop
 
-local function startFreeSpinLoop()
-    freeSpinLoopRunning = true
-    freeSpinLoop = spawn(function()
-        while freeSpinLoopRunning do
-            local args = {
-                [1] = "free"
-            }
-            game:GetService("ReplicatedStorage").Events.Spin:FireServer(unpack(args))
-            wait()
-        end
-    end)
-end
-
-local function stopFreeSpinLoop()
-    freeSpinLoopRunning = false
-    if freeSpinLoop then
-        freeSpinLoop:Destroy()
-    end
-end
-
-Tab3Section:NewButton("Toggle Free Spin Loop", "Toggle Automatic Free Spinning", function()
-    if not freeSpinLoopRunning then
-        startFreeSpinLoop()
+Tab3Section:NewToggle("Toggle Free Spin Loop", "Toggle Automatic Free Spinning", function(state)
+    freeSpinLoopRunning = state
+    if freeSpinLoopRunning then
+        spawn(function()
+            while freeSpinLoopRunning do
+                local args = {
+                    [1] = "free"
+                }
+                game:GetService("ReplicatedStorage").Events.Spin:FireServer(unpack(args))
+                wait()
+            end
+        end)
+        print("Free Spin Loop On")
     else
-        stopFreeSpinLoop()
+        print("Free Spin Loop Off")
     end
 end)
