@@ -54,5 +54,4 @@ local args = {
     }
     game:GetService("ReplicatedStorage").Events.Spin:FireServer(unpack(args))
 wait ()
-end
 end)
