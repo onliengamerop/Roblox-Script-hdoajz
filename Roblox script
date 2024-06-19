@@ -19,9 +19,13 @@ end)
 local Tab2 = window:NewTab("Auto Instant Spin😱")
 local Tab2Section = Tab2:NewSection("Spin Actions")
 
-Tab2Section:NewButton("Start Spin", "Automatically Spin", function()
-    spawn(function()
-        while true do
+local spinLoopRunning = false
+local spinLoop
+
+local function startSpinLoop()
+    spinLoopRunning = true
+    spinLoop = spawn(function()
+        while spinLoopRunning do
             local args = {
                 [1] = "spin"
             }
@@ -29,6 +33,21 @@ Tab2Section:NewButton("Start Spin", "Automatically Spin", function()
             wait()
         end
     end)
+end
+
+local function stopSpinLoop()
+    spinLoopRunning = false
+    if spinLoop then
+        spinLoop:Destroy()
+    end
+end
+
+Tab2Section:NewButton("Toggle Spin Loop", "Toggle Automatic Spinning", function()
+    if not spinLoopRunning then
+        startSpinLoop()
+    else
+        stopSpinLoop()
+    end
 end)
 
 -- Adding Anti-AFK functionality
@@ -47,11 +66,33 @@ end)
 local Tab3 = window:NewTab("Free Spin😱")
 local Tab3Section = Tab3:NewSection("Free Spin Actions")
 
-Tab3Section:NewButton("Free Spin", "Get a Free Spin", function()
- while true do   
-local args = {
-        [1] = "free"
-    }
-    game:GetService("ReplicatedStorage").Events.Spin:FireServer(unpack(args))
-wait ()
+local freeSpinLoopRunning = false
+local freeSpinLoop
+
+local function startFreeSpinLoop()
+    freeSpinLoopRunning = true
+    freeSpinLoop = spawn(function()
+        while freeSpinLoopRunning do
+            local args = {
+                [1] = "free"
+            }
+            game:GetService("ReplicatedStorage").Events.Spin:FireServer(unpack(args))
+            wait()
+        end
+    end)
+end
+
+local function stopFreeSpinLoop()
+    freeSpinLoopRunning = false
+    if freeSpinLoop then
+        freeSpinLoop:Destroy()
+    end
+end
+
+Tab3Section:NewButton("Toggle Free Spin Loop", "Toggle Automatic Free Spinning", function()
+    if not freeSpinLoopRunning then
+        startFreeSpinLoop()
+    else
+        stopFreeSpinLoop()
+    end
 end)
