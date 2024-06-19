@@ -57,7 +57,7 @@ Tab2Section:NewToggle("Toggle Spin Loop", "Toggle Automatic Spinning", function(
                     [1] = "spin"
                 }
                 game:GetService("ReplicatedStorage").Events.Spin:FireServer(unpack(args))
-                wait()
+                wait(0.3)
             end
         end)
         print("Spin Loop On")
@@ -93,7 +93,7 @@ Tab3Section:NewToggle("Toggle Free Spin Loop", "Toggle Automatic Free Spinning",
                     [1] = "free"
                 }
                 game:GetService("ReplicatedStorage").Events.Spin:FireServer(unpack(args))
-                wait()
+                wait(0.3)
             end
         end)
         print("Free Spin Loop On")
