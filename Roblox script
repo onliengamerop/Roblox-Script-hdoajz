@@ -42,3 +42,14 @@ Tab2Section:NewButton("Activate Anti-AFK", "Prevents being kicked for inactivity
         end)
     end)
 end)
+
+-- Creating the Free Spin tab and section
+local Tab3 = window:NewTab("Free Spin😱")
+local Tab3Section = Tab3:NewSection("Free Spin Actions")
+
+Tab3Section:NewButton("Free Spin", "Get a Free Spin", function()
+    local args = {
+        [1] = "free"
+    }
+    game:GetService("ReplicatedStorage").Events.Spin:FireServer(unpack(args))
+end)
