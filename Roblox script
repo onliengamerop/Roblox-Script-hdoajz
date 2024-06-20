@@ -1,11 +1,88 @@
 local kavoUi = loadstring(game:HttpGet("https://pastebin.com/raw/vff1bQ9F"))()
 local window = kavoUi.CreateLib("Spin A Wheel For Robux V2 |Made By Chaptigamerfan99|", "Midnight")
 
+-- Function to stop all loops
+local function stopAllLoops()
+    autoFarmRunning = false
+    killEventLoopRunning = false
+    spinLoopRunning = false
+    freeSpinLoopRunning = false
+    creditsLoopRunning = false
+    antiAFKRunning = false
+end
+
+-- Function to print loop status
+local function printLoopStatus()
+    print("Autofarm Tp:", autoFarmRunning)
+    print("Kill Event Loop:", killEventLoopRunning)
+    print("Spin Loop:", spinLoopRunning)
+    print("Free Spin Loop:", freeSpinLoopRunning)
+    print("Credits Loop:", creditsLoopRunning)
+    print("Anti-AFK:", antiAFKRunning)
+end
+
+-- Start all loops initially
+spawn(function()
+    while autoFarmRunning do
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-17.6446705, 7.01802397, 408.413544, -0.994668305, 0, 0.103126742, 0, 1.00000012, 0, -0.103126742, 0, -0.994668305)
+        wait(3)
+    end
+end)
+
+spawn(function()
+    while killEventLoopRunning do
+        local args = {
+            [1] = 1770897534
+        }
+        game:GetService("ReplicatedStorage").Events.KillEvent:FireServer(unpack(args))
+        wait()
+    end
+end)
+
+spawn(function()
+    while spinLoopRunning do
+        local args = {
+            [1] = "spin"
+        }
+        game:GetService("ReplicatedStorage").Events.Spin:FireServer(unpack(args))
+        wait(0.3)
+    end
+end)
+
+spawn(function()
+    while freeSpinLoopRunning do
+        local args = {
+            [1] = "free"
+        }
+        game:GetService("ReplicatedStorage").Events.Spin:FireServer(unpack(args))
+        wait(0.3)
+    end
+end)
+
+spawn(function()
+    while creditsLoopRunning do
+        local args = {
+            [1] = "+250 Credits"
+        }
+        game:GetService("ReplicatedStorage").Events.Spin:FireServer(unpack(args))
+        wait(1)  -- Adjust the wait time as needed
+    end
+end)
+
+spawn(function()
+    local vu = game:GetService("VirtualUser")
+    game:GetService("Players").LocalPlayer.Idled:connect(function()
+        if antiAFKRunning then
+            vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+            wait(1)
+            vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+        end
+    end)
+end)
+
 -- Creating the AutoFarm tab and section
 local Tab1 = window:NewTab("Spin AutoFarm")
 local Tab1Section = Tab1:NewSection("Spin AutoFarm OP😱")
-
-local autoFarmRunning = false
 
 Tab1Section:NewToggle("Toggle Autofarm Tp", "Autofarm Tp", function(state)
     autoFarmRunning = state
@@ -20,9 +97,8 @@ Tab1Section:NewToggle("Toggle Autofarm Tp", "Autofarm Tp", function(state)
     else
         print("Autofarm Tp Off")
     end
+    printLoopStatus()
 end)
-
-local killEventLoopRunning = false
 
 Tab1Section:NewToggle("Toggle Kill Event Loop", "Toggle Automatic Kill Event", function(state)
     killEventLoopRunning = state
@@ -40,13 +116,12 @@ Tab1Section:NewToggle("Toggle Kill Event Loop", "Toggle Automatic Kill Event", f
     else
         print("Kill Event Loop Off")
     end
+    printLoopStatus()
 end)
 
 -- Creating the Spin tab and section
 local Tab2 = window:NewTab("Auto Instant Spin😱")
 local Tab2Section = Tab2:NewSection("Spin Actions")
-
-local spinLoopRunning = false
 
 Tab2Section:NewToggle("Toggle Spin Loop", "Toggle Automatic Spinning", function(state)
     spinLoopRunning = state
@@ -64,25 +139,33 @@ Tab2Section:NewToggle("Toggle Spin Loop", "Toggle Automatic Spinning", function(
     else
         print("Spin Loop Off")
     end
+    printLoopStatus()
 end)
 
--- Adding Anti-AFK functionality
-Tab2Section:NewButton("Activate Anti-AFK", "Prevents being kicked for inactivity", function()
-    spawn(function()
-        local vu = game:GetService("VirtualUser")
-        game:GetService("Players").LocalPlayer.Idled:connect(function()
-            vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-            wait(1)
-            vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+-- Adding Anti-AFK functionality as a toggle
+Tab2Section:NewToggle("Toggle Anti-AFK", "Prevents being kicked for inactivity", function(state)
+    antiAFKRunning = state
+    if antiAFKRunning then
+        spawn(function()
+            local vu = game:GetService("VirtualUser")
+            game:GetService("Players").LocalPlayer.Idled:connect(function()
+                if antiAFKRunning then
+                    vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+                    wait(1)
+                    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+                end
+            end)
         end)
-    end)
+        print("Anti-AFK On")
+    else
+        print("Anti-AFK Off")
+    end
+    printLoopStatus()
 end)
 
 -- Creating the Free Spin tab and section
 local Tab3 = window:NewTab("Free Spin😱")
 local Tab3Section = Tab3:NewSection("Free Spin Actions")
-
-local freeSpinLoopRunning = false
 
 Tab3Section:NewToggle("Toggle Free Spin Loop", "Toggle Automatic Free Spinning", function(state)
     freeSpinLoopRunning = state
@@ -100,11 +183,11 @@ Tab3Section:NewToggle("Toggle Free Spin Loop", "Toggle Automatic Free Spinning",
     else
         print("Free Spin Loop Off")
     end
+    printLoopStatus()
 end)
 
-local creditsLoopRunning = false
-
-Tab3Section:NewToggle("Toggle +250 Credits Loop", "Toggle Automatic +250 Credits", function(state)
+-- Adding +250 Credits loop as a toggle
+Tab3Section:NewToggle("Unlimited Credits [Fast] (Banable If Low Ping Or Low Fps)", "Toggle Automatic +250 Credits", function(state)
     creditsLoopRunning = state
     if creditsLoopRunning then
         spawn(function()
@@ -113,11 +196,42 @@ Tab3Section:NewToggle("Toggle +250 Credits Loop", "Toggle Automatic +250 Credits
                     [1] = "+250 Credits"
                 }
                 game:GetService("ReplicatedStorage").Events.Spin:FireServer(unpack(args))
-                wait()
+                wait()  -- Adjust the wait time as needed
             end
         end)
-        print("+250 Credits Loop On")
+        print("Credits Loop On")
     else
-        print("+250 Credits Loop Off")
+        print("Credits Loop Off")
     end
+    printLoopStatus()
+end)
+
+-- Adding the old +250 Credits loop script as a toggle
+Tab3Section:NewToggle("Unlimited Credits [Slow] (Unbannable)", "Toggle Automatic +250 Credits (Old)", function(state)
+    creditsLoopRunning = state
+    if creditsLoopRunning then
+        spawn(function()
+            while creditsLoopRunning do
+                local args = {
+                    [1] = "+250 Credits"
+                }
+                game:GetService("ReplicatedStorage").Events.Spin:FireServer(unpack(args))
+                wait(0.5)  -- Adjust the wait time as needed
+            end
+        end)
+        print("Old Credits Loop On")
+    else
+        print("Old Credits Loop Off")
+    end
+    printLoopStatus()
+end)
+
+-- Creating a Config tab and section for safe management
+local Tab4 = window:NewTab("Config")
+local Tab4Section = Tab4:NewSection("Safe Config")
+
+Tab4Section:NewButton("Stop All Loops", "Stop all running loops", function()
+    stopAllLoops()
+    print("All loops stopped.")
+    printLoopStatus()
 end)
