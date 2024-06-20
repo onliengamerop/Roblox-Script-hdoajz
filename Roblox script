@@ -101,3 +101,23 @@ Tab3Section:NewToggle("Toggle Free Spin Loop", "Toggle Automatic Free Spinning",
         print("Free Spin Loop Off")
     end
 end)
+
+local creditsLoopRunning = false
+
+Tab3Section:NewToggle("Toggle +250 Credits Loop", "Toggle Automatic +250 Credits", function(state)
+    creditsLoopRunning = state
+    if creditsLoopRunning then
+        spawn(function()
+            while creditsLoopRunning do
+                local args = {
+                    [1] = "+250 Credits"
+                }
+                game:GetService("ReplicatedStorage").Events.Spin:FireServer(unpack(args))
+                wait(0.5)
+            end
+        end)
+        print("+250 Credits Loop On")
+    else
+        print("+250 Credits Loop Off")
+    end
+end)
