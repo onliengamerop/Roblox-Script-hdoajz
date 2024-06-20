@@ -113,7 +113,7 @@ Tab3Section:NewToggle("Toggle +250 Credits Loop", "Toggle Automatic +250 Credits
                     [1] = "+250 Credits"
                 }
                 game:GetService("ReplicatedStorage").Events.Spin:FireServer(unpack(args))
-                wait(0.5)
+                wait()
             end
         end)
         print("+250 Credits Loop On")
